@@ -1,0 +1,13 @@
+[tool.poetry]
+name = "your-django-project"
+version = "0.1.0"
+description = "A simple Django project"
+authors = ["Your Name <your.email@example.com>"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+# Django templates
+[tool.djlint]
+blank_line_after_tag="load,extends,include,block"

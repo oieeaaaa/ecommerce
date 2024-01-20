@@ -1,0 +1,24 @@
+# Git ignores for Python, Django, and JavaScript.
+
+*.py[cod]
+*.py[co]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+__pycache__
+*.egg-info
+db.sqlite3
+migrations/
