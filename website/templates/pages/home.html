@@ -2,6 +2,14 @@
 
 {% block head %}<title>Home</title>{% endblock %}
 {% block content %}
-    <h1 class="bg-red-500">Home</h1>
-    <div>List of products</div>
+    <h1 class="mb-4 bg-red-500">Products</h1>
+    <div>
+        <div>
+            {% for product in products %}
+                <a class="block" href="{% url 'product_detail' product.id %}">
+                    <div>{{ product.name }}</div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

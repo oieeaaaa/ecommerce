@@ -1,0 +1,11 @@
+{% extends "layout/base.html" %}
+
+{% block head %}<title>Detail page</title>{% endblock %}
+{% block content %}
+    <h1 class="bg-red-100">
+        {{ product.name }}
+        <span class="font-bold">{{ product.price }}</span>
+    </h1>
+    <img src="{{ product.image_url }}" alt="{{ product.name }}" width="100">
+    <p>Qty: {{ product.stock }}</p>
+{% endblock %}
