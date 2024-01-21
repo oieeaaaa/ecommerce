@@ -3,10 +3,32 @@
 {% block head %}<title>Cart</title>{% endblock %}
 {% block content %}
     <h1 class="mb-4 bg-red-500">Cart</h1>
-    <ul>
+    <ul data-list>
         {% for item in cart %}
-            <li>
-                <a href="{% url 'product_detail' item.product.id %}">{{ item.product.name }} - {{ item.quantity }}</a>
+            <li class="flex items-center">
+                <a class="mr-auto" href="{% url 'product_detail' item.product.id %}">{{ item.product.name }}</a>
+                <form hx-post="{% url 'cart_item_update' item.id %}"
+                      hx-select="[data-list]"
+                      hx-target="[data-list]"
+                      hx-swap="outerHTML">
+                    {% csrf_token %}
+                    <label for="qty">
+                        Qty:
+                        <input id="qty"
+                               class="w-10"
+                               type="number"
+                               name="qty"
+                               value="{{ item.quantity }}">
+                    </label>
+                    <button class="bg-blue-500" type="submit">Update</button>
+                </form>
+                <form hx-post="{% url 'cart_item_delete' item.id %}"
+                      hx-select="[data-list]"
+                      hx-target="[data-list]"
+                      hx-swap="outerHTML">
+                    {% csrf_token %}
+                    <button class="bg-red-500" type="submit">Remove</button>
+                </form>
             </li>
         {% endfor %}
     </ul>

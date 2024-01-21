@@ -3,19 +3,22 @@
 {% block head %}<title>Detail page</title>{% endblock %}
 {% block content %}
     <h1 class="bg-red-100">
-        {{ product.name }}
-        <span class="font-bold">{{ product.price }}</span>
+        {{ product.name }} - <span class="font-bold">Php {{ product.price }}</span>
     </h1>
     <img src="{{ product.image_url }}" alt="{{ product.name }}" width="100">
     <p>Qty: {{ product.stock }}</p>
-    <form class="flex flex-col items-start my-4"
-          method="POST"
-          action="{% url 'cart' %}">
+    <form data-add-to-cart
+          class="flex flex-col items-start my-4"
+          hx-post="{% url 'cart' %}"
+          hx-target="[data-add-to-cart]"
+          hx-select="[data-add-to-cart]"
+          hx-swap="outerHTML">
         {% csrf_token %}
         <input type="hidden" name="product_id" value="{{ product.id }}">
         <label for="Qty">
             Qty:
             <input id="qty" type="number" name="qty" value="1">
+            {% if errors.qty %}<span class="text-red-500">{{ errors.qty }}</span>{% endif %}
         </label>
         <button class="bg-green-100">Add to cart</button>
     </form>

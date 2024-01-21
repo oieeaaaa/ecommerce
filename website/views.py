@@ -27,36 +27,78 @@ def product_detail(request, id):
 # x handle create a cart
 # x handle same cart item add
 # x handle update product stock
-# - handle cart quantity update
-# - handle cart item delete
+# x handle cart quantity update
+# x handle cart item delete
+# - handle redirect after adding to cart
 def cart(request):
     if request.method == 'POST':
         product_id = request.POST['product_id']
         quantity = request.POST['qty']
         product = get_object_or_404(Product, id=product_id)
 
-        if product.stock < int(quantity):
-            return redirect('cart')
-
-        product.stock -= int(quantity)
-        product.save()
-
         # check if cart exist
         cart = Cart.objects.filter(product=product).first()
+        cartQty = int(cart.quantity) if cart is not None else 0
+
+        if product.stock < (int(quantity) + cartQty):
+            return render(request, 'pages/product-detail.html', {
+                'product': product,
+                'errors': {
+                    'qty': 'Stock is not enough'
+                },
+            })
 
         if cart:
             cart.quantity += int(quantity)
             cart.save()
-            return redirect('cart')
         else:
             # create a cart
             cart = Cart.objects.create(product=product, quantity=quantity)
             cart.save()
 
         # redirect to cart page
+        # add custom header to response
+        response = render(request, 'pages/cart.html', {
+            'cart': Cart.objects.all()
+        })
+
+        response['HX-Reswap'] = 'none'
+        response['HX-Location'] = '/cart'
+
+        return response
+    else:
+        return render(request, 'pages/cart.html', {
+            'cart': Cart.objects.all()
+        })
+
+
+def cart_item_delete(request, id):
+    if request.method == 'POST':
+        cart = get_object_or_404(Cart, id=id)
+        cart.delete()
+
+        return render(request, 'pages/cart.html', {
+            'cart': Cart.objects.all()
+        })
+    else:
         return redirect('cart')
 
-    cart = Cart.objects.all()
-    return render(request, 'pages/cart.html', {
-        'cart': cart
-    })
+
+def cart_item_update(request, id):
+    if request.method == 'POST':
+        cart = get_object_or_404(Cart, id=id)
+        product = get_object_or_404(Product, id=cart.product.id)
+
+        qty = int(request.POST['qty'])
+
+        if product.stock < qty:
+            return redirect('cart')
+
+        cart.quantity = qty
+        cart.save()
+
+        return render(request, 'pages/cart.html', {
+            'cart': Cart.objects.all()
+        })
+    else:
+        return redirect('cart')
