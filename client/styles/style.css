@@ -1,5 +1,6 @@
+/* vendors */
 @import "./icons/icons.css";
+@import "./tailwind.css";
 
-body {
-  background: red;
-}
+/* base */
+@import "./base/reset.css";

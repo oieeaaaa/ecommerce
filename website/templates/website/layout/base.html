@@ -5,9 +5,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{% static 'website/css/icons.css' %}">
-        <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-        <script src="https://cdn.tailwindcss.com"></script>
+        <!-- Client files -->
+        <link rel="stylesheet" href="{% static 'website/dist/style.css' %}">
+        <script src="{% static 'website/dist/main.js' %}"></script>
+        <!-- End of client files -->
         {% block head %}{% endblock %}
     </head>
     <body>
