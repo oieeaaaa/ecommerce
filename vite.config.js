@@ -14,6 +14,6 @@ export default defineConfig({
       output: {
         dir: path.resolve(__dirname, 'website/static/website/dist'),
       }
-    }
-  }
+    },
+  },
 })

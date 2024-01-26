@@ -4,3 +4,7 @@
 
 /* base */
 @import "./base/reset.css";
+
+body {
+  @apply bg-orange-500;
+}
