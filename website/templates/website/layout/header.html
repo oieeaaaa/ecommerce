@@ -1,0 +1,10 @@
+{% load static %}
+
+<header class="flex justify-between items-center">
+  <span class="icon-home"></span>
+  <span class="icon-shopping-cart"></span>
+
+  <!-- <img src="{% static 'website/logo.png' %}" alt="logo" class="w-32"> -->
+  <a href="{% url 'home' %}">Home</a>
+  <a href="{% url 'cart' %}">Cart</a>
+</header>

@@ -1,14 +1,17 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'website/css/icons.css' %}">
         <script src="https://unpkg.com/htmx.org@1.9.10"></script>
         <script src="https://cdn.tailwindcss.com"></script>
         {% block head %}{% endblock %}
     </head>
     <body>
-        {% include 'layout/header.html' %}
+        {% include 'website/layout/header.html' %}
 
         {% block content %}{% endblock %}
     </body>

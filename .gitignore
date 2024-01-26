@@ -21,4 +21,3 @@ lib64
 __pycache__
 *.egg-info
 db.sqlite3
-migrations/

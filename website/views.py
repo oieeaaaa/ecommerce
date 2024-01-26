@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from website.models import Product, Cart
@@ -8,7 +9,7 @@ from website.models import Product, Cart
 def index(request):
     products = Product.objects.all()
 
-    return render(request, 'pages/home.html', {
+    return render(request, 'website/pages/home.html', {
         'products': products,
     })
 
@@ -16,10 +17,9 @@ def index(request):
 def product_detail(request, id):
     product = Product.objects.get(id=id)
 
-    return render(request, 'pages/product-detail.html', {
+    return render(request, 'website/pages/product-detail.html', {
         'product': product,
     })
-
 
 # TODO:
 # x check if product exist
@@ -29,7 +29,7 @@ def product_detail(request, id):
 # x handle update product stock
 # x handle cart quantity update
 # x handle cart item delete
-# - handle redirect after adding to cart
+# x handle redirect after adding to cart
 def cart(request):
     if request.method == 'POST':
         product_id = request.POST['product_id']
@@ -41,7 +41,7 @@ def cart(request):
         cartQty = int(cart.quantity) if cart is not None else 0
 
         if product.stock < (int(quantity) + cartQty):
-            return render(request, 'pages/product-detail.html', {
+            return render(request, 'website/pages/product-detail.html', {
                 'product': product,
                 'errors': {
                     'qty': 'Stock is not enough'
@@ -58,16 +58,14 @@ def cart(request):
 
         # redirect to cart page
         # add custom header to response
-        response = render(request, 'pages/cart.html', {
-            'cart': Cart.objects.all()
-        })
+        response = HttpResponse()
 
         response['HX-Reswap'] = 'none'
         response['HX-Location'] = '/cart'
 
         return response
     else:
-        return render(request, 'pages/cart.html', {
+        return render(request, 'website/pages/cart.html', {
             'cart': Cart.objects.all()
         })
 
@@ -77,7 +75,7 @@ def cart_item_delete(request, id):
         cart = get_object_or_404(Cart, id=id)
         cart.delete()
 
-        return render(request, 'pages/cart.html', {
+        return render(request, 'website/pages/cart.html', {
             'cart': Cart.objects.all()
         })
     else:
@@ -97,7 +95,7 @@ def cart_item_update(request, id):
         cart.quantity = qty
         cart.save()
 
-        return render(request, 'pages/cart.html', {
+        return render(request, 'website/pages/cart.html', {
             'cart': Cart.objects.all()
         })
     else:
