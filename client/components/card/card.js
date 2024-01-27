@@ -62,20 +62,18 @@ class Card extends HTMLElement {
       if (!this.isQtyOpen) {
         this.isQtyOpen = true;
         this._qty.classList.add('card-open-qty');
-        this._toggleQtyIcon.classList.remove('icon-shopping-cart');
-        this._toggleQtyIcon.classList.add('icon-x');
+        this._toggleQtyIcon.classList.remove('icon-shopping-cart', 'text-primary');
+        this._toggleQtyIcon.classList.add('icon-x', 'text-red-400');
         return;
       }
 
       this.isQtyOpen = false;
       this._input.value = 0;
       this._qty.classList.remove('card-open-qty');
-      this._toggleQtyIcon.classList.remove('icon-x');
-      this._toggleQtyIcon.classList.add('icon-shopping-cart');
+      this._toggleQtyIcon.classList.remove('icon-x', 'text-red-400');
+      this._toggleQtyIcon.classList.add('icon-shopping-cart', 'text-primary');
     });
 
-    // TODO:
-    // - Test this with multiple cards on the page
     this._confirm.addEventListener('click', () => {
       window.htmx.trigger(this._form, "x-submit");
     });

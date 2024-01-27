@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views import View
 
 from website.models import Product, Cart
 
@@ -30,8 +31,14 @@ def product_detail(request, id):
 # x handle cart quantity update
 # x handle cart item delete
 # x handle redirect after adding to cart
-def cart(request):
-    if request.method == 'POST':
+
+class CartView(View):
+    def get(self, request):
+        return render(request, 'website/pages/cart.html', {
+            'cart': Cart.objects.all()
+        })
+
+    def post(self, request):
         product_id = request.POST['product_id']
         quantity = request.POST['qty']
         product = get_object_or_404(Product, id=product_id)
@@ -64,11 +71,6 @@ def cart(request):
         response['HX-Location'] = '/cart'
 
         return response
-    else:
-        return render(request, 'website/pages/cart.html', {
-            'cart': Cart.objects.all()
-        })
-
 
 def cart_item_delete(request, id):
     if request.method == 'POST':

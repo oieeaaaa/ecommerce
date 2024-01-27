@@ -2,14 +2,14 @@
 
 {% block head %}<title>Home</title>{% endblock %}
 {% block content %}
-    <div class="container px-10">
+    <div class="container p-10 space-y-10">
         {% for product in products %}
             <a class="block" href="{% url 'product_detail' product.id %}">
                 <x-card>
                 <div class="rounded-xl w-full shadow-xl overflow-hidden p-4 bg-white space-y-4">
                     <div class="relative grid grid-rows-2">
-                        <figure class="col-span-full row-span-full rounded-xl overflow-hidden flex items-center justify-center shadow">
-                            <img class="w-full aspect-square"
+                        <figure class="col-span-full row-span-full rounded-xl overflow-hidden flex items-center justify-center">
+                            <img class="w-full aspect-square object-cover"
                                  src="{{ product.image_url }}"
                                  alt="{{ product.name }}">
                         </figure>
@@ -41,7 +41,7 @@
                                         </button>
                                         <button type="button"
                                                 data-toggle-qty
-                                                class="w-8 h-8 rounded-full bg-black text-red-400">
+                                                class="w-8 h-8 rounded-full bg-black text-primary">
                                             <span data-toggle-qty-icon class="icon-shopping-cart text-lg"></span>
                                         </button>
                                     </div>
@@ -52,7 +52,7 @@
                     <div class="grid grid-cols-2">
                         <div>
                             <p class="font-black">{{ product.name }}</p>
-                            <p>{{ product.stock }} pcs.</p>
+                            <p class="text-gray-400">{{ product.stock }} pcs. available</p>
                         </div>
                         <p class="font-bold justify-self-end self-end">₱{{ product.price }}</p>
                     </div>
