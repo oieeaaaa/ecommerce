@@ -11,6 +11,10 @@ module.exports = {
       center: true,
       padding: '1rem',
     },
+    colors: {
+      ...require('tailwindcss/colors'),
+      primary: '#d90166',
+    },
     fontFamily: {
       sans: ['Lato', 'sans-serif'],
     }

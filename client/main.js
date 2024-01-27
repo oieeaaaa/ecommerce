@@ -1,5 +1,9 @@
-import 'htmx.org'
+import './components/card/card.js'
 
-const helloWorld = 'yohello world'
+import './styles/icons/icons.css'
+import './styles/tailwind.css'
+import './styles/base/reset.css'
 
-console.log({ helloWorld })
+import './components/card/card.css'
+
+window.htmx = require('htmx.org')

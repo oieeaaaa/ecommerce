@@ -1,0 +1,7 @@
+x-card {
+  --quantity-width: 250px;
+}
+
+.card-open-qty {
+  width: 258px;
+}
