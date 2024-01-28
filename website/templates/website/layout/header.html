@@ -7,9 +7,8 @@
         </a>
         <a class="text-gray-500 relative" href="{% url 'cart' %}">
             <span class="icon-shopping-cart text-3xl"></span>
-            <span class="text-sm absolute top-0 right-0 bg-primary text-white rounded-full font-bold w-5 h-5 flex items-center justify-center translate-x-1/2 -translate-y-1"
-                  hx-trigger="load once, cart_updated from:body"
-                  hx-get="{% url 'cart_count' %}"></span>
+            <div hx-trigger="load once, cart_updated from:body"
+                 hx-get="{% url 'cart_count' %}"></div>
         </a>
     </div>
 </header>

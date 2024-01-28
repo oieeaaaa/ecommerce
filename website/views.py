@@ -113,4 +113,11 @@ def cart_item_update(request, id):
         return redirect('cart')
 
 def cart_length(request):
-    return HttpResponse(Cart.objects.count())
+    cart_count = Cart.objects.count()
+
+    if cart_count <= 0:
+        return HttpResponse('')
+
+    return render(request, 'website/elements/cart-count.html', {
+        'cart_count': Cart.objects.count()
+    })
