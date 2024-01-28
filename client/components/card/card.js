@@ -38,7 +38,7 @@ class Card extends HTMLElement {
   open = () => {
     this.isQtyOpen = true;
     this._qty.classList.add('card-open-qty');
-    this._toggleQtyIcon.classList.remove('icon-shopping-cart', 'text-primary');
+    this._toggleQtyIcon.classList.remove('icon-shopping-cart', 'text-white');
     this._toggleQtyIcon.classList.add('icon-x', 'text-red-400');
   }
 
@@ -47,7 +47,7 @@ class Card extends HTMLElement {
     this._input.value = 0;
     this._qty.classList.remove('card-open-qty');
     this._toggleQtyIcon.classList.remove('icon-x', 'text-red-400');
-    this._toggleQtyIcon.classList.add('icon-shopping-cart', 'text-primary');
+    this._toggleQtyIcon.classList.add('icon-shopping-cart', 'text-white');
   }
 
   constructor() {

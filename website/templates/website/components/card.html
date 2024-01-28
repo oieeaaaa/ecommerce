@@ -5,7 +5,7 @@
         <img class="w-full aspect-square object-cover" src="{{ product.image_url }}" alt="{{ product.name }}">
       </figure>
       <div
-        class="col-span-full row-span-full self-end justify-self-end relative translate-y-1/2 overflow-hidden rounded-full h-10 w-10 transition-all bg-white border will-change-auto"
+        class="col-span-full row-span-full self-end justify-self-end relative translate-y-1/2 overflow-hidden rounded-full h-10 w-10 transition-all bg-white border border-primary will-change-auto"
         data-qty>
         <form data-form hx-post="{% url 'cart' %}" hx-trigger="x-submit" hx-swap="none">
           {% csrf_token %}
@@ -26,7 +26,7 @@
               <button data-confirm class="w-8 h-8 rounded-full bg-black text-green-400">
                 <span class="icon-check text-lg"></span>
               </button>
-              <button type="button" data-toggle-qty class="w-8 h-8 rounded-full bg-black text-primary">
+              <button type="button" data-toggle-qty class="w-8 h-8 rounded-full bg-black text-white">
                 <span data-toggle-qty-icon class="icon-shopping-cart text-lg"></span>
               </button>
             </div>

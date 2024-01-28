@@ -83,9 +83,12 @@ def cart_item_delete(request, id):
         cart = get_object_or_404(Cart, id=id)
         cart.delete()
 
-        return render(request, 'website/pages/cart.html', {
+        res = render(request, 'website/pages/cart.html', {
             'cart': Cart.objects.all()
         })
+        res['HX-Trigger'] = 'cart_updated'
+
+        return res
     else:
         return redirect('cart')
 
@@ -108,3 +111,6 @@ def cart_item_update(request, id):
         })
     else:
         return redirect('cart')
+
+def cart_length(request):
+    return HttpResponse(Cart.objects.count())
