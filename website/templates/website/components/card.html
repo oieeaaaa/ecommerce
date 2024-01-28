@@ -1,0 +1,45 @@
+<x-card>
+  <div class="rounded-xl w-full shadow-xl overflow-hidden p-4 bg-white space-y-4">
+    <div class="relative grid grid-rows-2">
+      <figure class="col-span-full row-span-full rounded-xl overflow-hidden flex items-center justify-center">
+        <img class="w-full aspect-square object-cover" src="{{ product.image_url }}" alt="{{ product.name }}">
+      </figure>
+      <div
+        class="col-span-full row-span-full self-end justify-self-end relative translate-y-1/2 overflow-hidden rounded-full h-10 w-10 transition-all bg-white border will-change-auto"
+        data-qty>
+        <form data-form hx-post="{% url 'cart' %}" hx-trigger="x-submit" hx-swap="none">
+          {% csrf_token %}
+          <input type="hidden" name="product_id" value="{{ product.id }}">
+          <div class="grid grid-cols-[1fr_auto] space-x-2 w-[250px] absolute top-1/2 -translate-y-1/2 right-[3px]">
+            <div class="flex items-center space-x-1">
+              <button type="button" data-add class="w-8 h-8 rounded-full bg-white text-green-400 border">
+                <span class="icon-plus text-lg"></span>
+              </button>
+              <input data-input name="qty"
+                class="w-14 h-8 rounded-full bg-white border text-center font-bold appearance-none px-3 text-sm"
+                type="number">
+              <button type="button" data-minus class="w-8 h-8 rounded-full bg-white text-red-400 border">
+                <span class="icon-minus text-lg"></span>
+              </button>
+            </div>
+            <div class="flex items-center space-x-2">
+              <button data-confirm class="w-8 h-8 rounded-full bg-black text-green-400">
+                <span class="icon-check text-lg"></span>
+              </button>
+              <button type="button" data-toggle-qty class="w-8 h-8 rounded-full bg-black text-primary">
+                <span data-toggle-qty-icon class="icon-shopping-cart text-lg"></span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="grid grid-cols-2">
+      <div>
+        <p class="font-black">{{ product.name }}</p>
+        <p class="text-gray-400">{{ product.stock }} pcs. in stock</p>
+      </div>
+      <p class="font-bold justify-self-end self-end">₱{{ product.price }}</p>
+    </div>
+  </div>
+</x-card>

@@ -35,6 +35,21 @@ class Card extends HTMLElement {
     return this.querySelector('[data-toggle-qty-icon]');
   }
 
+  open = () => {
+    this.isQtyOpen = true;
+    this._qty.classList.add('card-open-qty');
+    this._toggleQtyIcon.classList.remove('icon-shopping-cart', 'text-primary');
+    this._toggleQtyIcon.classList.add('icon-x', 'text-red-400');
+  }
+
+  close = () => {
+    this.isQtyOpen = false;
+    this._input.value = 0;
+    this._qty.classList.remove('card-open-qty');
+    this._toggleQtyIcon.classList.remove('icon-x', 'text-red-400');
+    this._toggleQtyIcon.classList.add('icon-shopping-cart', 'text-primary');
+  }
+
   constructor() {
     super();
 
@@ -60,22 +75,15 @@ class Card extends HTMLElement {
 
     this._toggleQty.addEventListener('click', () => {
       if (!this.isQtyOpen) {
-        this.isQtyOpen = true;
-        this._qty.classList.add('card-open-qty');
-        this._toggleQtyIcon.classList.remove('icon-shopping-cart', 'text-primary');
-        this._toggleQtyIcon.classList.add('icon-x', 'text-red-400');
-        return;
+        return this.open();
       }
 
-      this.isQtyOpen = false;
-      this._input.value = 0;
-      this._qty.classList.remove('card-open-qty');
-      this._toggleQtyIcon.classList.remove('icon-x', 'text-red-400');
-      this._toggleQtyIcon.classList.add('icon-shopping-cart', 'text-primary');
+      this.close();
     });
 
     this._confirm.addEventListener('click', () => {
       window.htmx.trigger(this._form, "x-submit");
+      this.close();
     });
   }
 }

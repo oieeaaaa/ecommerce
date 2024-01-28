@@ -10,9 +10,7 @@
     <form data-add-to-cart
           class="flex flex-col items-start my-4"
           hx-post="{% url 'cart' %}"
-          hx-target="[data-add-to-cart]"
-          hx-select="[data-add-to-cart]"
-          hx-swap="outerHTML">
+          hx-swap="none">
         {% csrf_token %}
         <input type="hidden" name="product_id" value="{{ product.id }}">
         <label for="Qty">

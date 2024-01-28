@@ -48,12 +48,18 @@ class CartView(View):
         cartQty = int(cart.quantity) if cart is not None else 0
 
         if product.stock < (int(quantity) + cartQty):
-            return render(request, 'website/pages/product-detail.html', {
-                'product': product,
-                'errors': {
-                    'qty': 'Stock is not enough'
-                },
+            # return render(request, 'website/pages/product-detail.html', {
+            #     'product': product,
+            #     'errors': {
+            #         'qty': 'Stock is not enough'
+            #     },
+            # })
+            res = render(request, 'website/components/alert.html', {
+                'type': 'danger',
+                'message': 'Stock is not enough'
             })
+
+            return res;
 
         if cart:
             cart.quantity += int(quantity)

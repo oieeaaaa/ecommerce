@@ -10,7 +10,7 @@ build-backend = "poetry.core.masonry.api"
 
 # Django templates
 [tool.djlint]
-blank_line_after_tag="load,extends,include"
+blank_line_after_tag="load,extends"
 
 [project.scripts]
 "manage.py" = "ecommerce:django_manage"
