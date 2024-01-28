@@ -1,0 +1,12 @@
+{
+  "include": [
+    "./**/*.py"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/__pycache__",
+    "**/*.pyc"
+  ],
+  "venvPath": "./venv",
+  "venv": "./venv/bin/activate"
+}

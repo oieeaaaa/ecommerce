@@ -34,12 +34,18 @@
         </form>
       </div>
     </div>
-    <div class="grid grid-cols-2">
-      <div>
-        <p class="font-black">{{ product.name }}</p>
+    <div class="space-y-1">
+      <p class="font-bold text-gray-950 leading-none">{{ product.name }}</p>
+      <div class="grid grid-cols-2">
         <p class="text-gray-400">{{ product.stock }} pcs. in stock</p>
+        <p class="font-bold justify-self-end self-end">
+          {% if product.price == 0 %}
+          FREE
+          {% else %}
+          ₱{{ product.price|floatformat:2 }}
+          {% endif %}
+        </p>
       </div>
-      <p class="font-bold justify-self-end self-end">₱{{ product.price }}</p>
     </div>
   </div>
 </x-card>

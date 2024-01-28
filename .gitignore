@@ -21,6 +21,7 @@ lib64
 __pycache__
 *.egg-info
 db.sqlite3
+venv
 
 # For front-end
 node_modules

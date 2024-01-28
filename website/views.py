@@ -22,16 +22,6 @@ def product_detail(request, id):
         'product': product,
     })
 
-# TODO:
-# x check if product exist
-# x check if product stock is enough
-# x handle create a cart
-# x handle same cart item add
-# x handle update product stock
-# x handle cart quantity update
-# x handle cart item delete
-# x handle redirect after adding to cart
-
 class CartView(View):
     def get(self, request):
         return render(request, 'website/pages/cart.html', {
@@ -48,12 +38,6 @@ class CartView(View):
         cartQty = int(cart.quantity) if cart is not None else 0
 
         if product.stock < (int(quantity) + cartQty):
-            # return render(request, 'website/pages/product-detail.html', {
-            #     'product': product,
-            #     'errors': {
-            #         'qty': 'Stock is not enough'
-            #     },
-            # })
             res = render(request, 'website/components/alert.html', {
                 'type': 'danger',
                 'message': 'Stock is not enough'
