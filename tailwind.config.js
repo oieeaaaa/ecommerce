@@ -13,7 +13,7 @@ module.exports = {
     },
     colors: {
       ...require('tailwindcss/colors'),
-      primary: '#d90166',
+      primary: '#f25613',
     },
     fontFamily: {
       sans: ['Lato', 'sans-serif'],

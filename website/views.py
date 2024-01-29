@@ -24,8 +24,10 @@ def product_detail(request, id):
 
 class CartView(View):
     def get(self, request):
+        cart = Cart.objects.all()
+
         return render(request, 'website/pages/cart.html', {
-            'cart': Cart.objects.all()
+            'cart': cart
         })
 
     def post(self, request):
@@ -85,14 +87,28 @@ def cart_item_update(request, id):
         qty = int(request.POST['qty'])
 
         if product.stock < qty:
-            return redirect('cart')
+            res = render(request, 'website/components/alert.html', {
+                'type': 'danger',
+                'message': 'Stock is not enough'
+            })
 
-        cart.quantity = qty
-        cart.save()
+            res['HX-Reswap'] = 'none'
 
-        return render(request, 'website/pages/cart.html', {
+            return res;
+
+        # delete cart if qty is 0
+        if qty <= 0:
+            cart.delete()
+        else:
+            cart.quantity = qty
+            cart.save()
+
+        res = render(request, 'website/pages/cart.html', {
             'cart': Cart.objects.all()
         })
+
+        res['HX-Trigger'] = 'cart_updated'
+        return res
     else:
         return redirect('cart')
 

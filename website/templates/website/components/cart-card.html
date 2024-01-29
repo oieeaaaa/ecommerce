@@ -1,0 +1,30 @@
+<x-cart-card class="rounded-lg bg-white border w-full p-2 grid grid-cols-[auto_1fr_auto] gap-x-4">
+  <a href="{% url 'product_detail' item.product.id %}">
+    <img class="w-24 aspect-square object-cover rounded-lg" src="{{ item.product.image_url }}"
+      alt="{{ item.product.name }}">
+  </a>
+  <div class="text-sm">
+    <a class="font-bold" href="{% url 'product_detail' item.product.id %}">{{ item.product.name }}</a>
+    <p class="text-gray-500 mb-2">{{ item.product.stock }} pcs. in stock</p>
+    <p class="font-bold">₱ {{ item.product.price|floatformat:2 }}</p>
+    <form hx-post="{% url 'cart_item_delete' item.id %}" hx-select="[data-list]" hx-target="[data-list]"
+      hx-swap="outerHTML">
+      {% csrf_token %}
+      <button class="mt-2 font-bold underline text-red-500">Remove</button>
+    </form>
+  </div>
+  <form
+    class="w-10 py-1 border rounded-full flex flex-col justify-center items-center self-start overflow-hidden bg-gray-300/35 space-y-1"
+    data-form hx-post="{% url 'cart_item_update' item.id %}" hx-select="[data-list]" hx-target="[data-list]"
+    hx-trigger="cart_qty_updated delay:500ms" hx-swap="outerHTML">
+    {% csrf_token %}
+    <button type="button" data-add class="!mt-0 w-8 h-8 rounded-full bg-primary text-white">
+      <span class="icon-plus"></span>
+    </button>
+    <input data-input class="w-full text-center bg-transparent font-bold" type="number" name="qty"
+      value="{{ item.quantity }}">
+    <button type="button" data-minus class="w-8 h-8 rounded-full bg-white text-black">
+      <span class="icon-minus"></span>
+    </button>
+  </form>
+</x-cart-card>
