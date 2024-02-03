@@ -8,5 +8,6 @@
     "**/*.pyc"
   ],
   "venvPath": "./venv",
-  "venv": "./venv/bin/activate"
+  "venv": "./venv/bin/activate",
+  "reportAttributeAccessIssue": false
 }

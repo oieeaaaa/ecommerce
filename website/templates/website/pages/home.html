@@ -5,15 +5,29 @@
     <div class="container py-10">
         <div class="space-y-3 mb-10">
             <h1 class="text-gray-900 uppercase font-oswald">Top Categories</h1>
-            <div class="flex flex-wrap gap-x-2 gap-y-2">
-                <button class="text-gray-600 rounded-md px-3 bg-white font-medium h-10">Electronics</button>
-                <button class="text-gray-600 rounded-md px-3 bg-white font-medium h-10">Clothing</button>
-                <button class="text-gray-600 rounded-md px-3 bg-white font-medium h-10">Furniture</button>
-                <button class="text-gray-600 rounded-md px-3 bg-white font-medium h-10">Books</button>
-                <button class="text-gray-600 rounded-md px-3 bg-white font-medium h-10">Toys</button>
-            </div>
+            <form hx-trigger="change from:[data-category-input]"
+                  hx-post="{% url 'filter' %}"
+                  hx-select="[data-products]"
+                  hx-target="[data-products]"
+                  hx-swap="outerHTML">
+                {% csrf_token %}
+                <div class="flex flex-wrap gap-x-2 gap-y-2">
+                    {% for category in categories %}
+                        {% with id=category.name|slugify %}
+                            <label for="{{ id }}">
+                                <input name="category.{{ category.name }}"
+                                       type="checkbox"
+                                       class="hidden peer/category"
+                                       id="{{ id }}"
+                                       data-category-input>
+                                <span class="peer-checked/category:bg-red-500 inline-block text-gray-600 rounded-md px-3 bg-white font-medium py-2">{{ category.name }}</span>
+                            </label>
+                        {% endwith %}
+                    {% endfor %}
+                </div>
+            </form>
         </div>
-        <div class="space-y-7">
+        <div data-products class="space-y-7">
             {% for product in products %}
                 <a class="block" href="{% url 'product_detail' product.id %}">
                     {% include "website/components/card.html" with product=product %}

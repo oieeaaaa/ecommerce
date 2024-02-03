@@ -1,18 +1,46 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
+from django.db.models import Q
 
-from website.models import Product, Cart
+from website.models import Category, Product, Cart
 
 # Create your views here.
 
-
 def index(request):
-    products = Product.objects.all()
+    products = Product.objects.all()[:10]
+    categories = Category.objects.all()[:100]
 
     return render(request, 'website/pages/home.html', {
         'products': products,
+        'categories': categories
     })
+
+class HomeFilter(View):
+    def post(self, request):
+        form = request.POST
+
+        filters = []
+        combined_filter = Q()
+
+        for key in form:
+            if key.find('category') != -1:
+                try:
+                    category = Category.objects.get(name=key.split('.')[1])
+                    filters.append(category.id)
+                except:
+                    return HttpResponse('Invalid category name')
+
+        for filter in filters:
+            # TODO: study this syntax
+            combined_filter |= filter
+
+        # filter products by categories
+        products = Product.objects.filter(combined_filter)[:10]
+
+        return render(request, 'website/pages/home.html', {
+            'products': products
+        })
 
 
 def product_detail(request, id):
