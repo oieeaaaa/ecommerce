@@ -35,6 +35,14 @@ class CartView(View):
         quantity = request.POST['qty']
         product = get_object_or_404(Product, id=product_id)
 
+        if int(quantity) <= 0:
+            res = render(request, 'website/components/alert.html', {
+                'type': 'danger',
+                'message': 'Quantity must be greater than 0'
+            })
+
+            return res
+
         # check if cart exist
         cart = Cart.objects.filter(product=product).first()
         cartQty = int(cart.quantity) if cart is not None else 0

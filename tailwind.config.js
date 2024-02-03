@@ -16,7 +16,8 @@ module.exports = {
       primary: '#f25613',
     },
     fontFamily: {
-      sans: ['Lato', 'sans-serif'],
+      sans: ['Montserrat', 'sans-serif'],
+      oswald: ['Oswald', 'sans-serif'],
     }
   },
 }

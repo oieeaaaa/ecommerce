@@ -1,5 +1,5 @@
 <x-cart-card class="rounded-lg bg-white border w-full p-2 grid grid-cols-[auto_1fr_auto] gap-x-4">
-  <a href="{% url 'product_detail' item.product.id %}">
+  <a class="self-start" href="{% url 'product_detail' item.product.id %}">
     <img class="w-24 aspect-square object-cover rounded-lg" src="{{ item.product.image_url }}"
       alt="{{ item.product.name }}">
   </a>
