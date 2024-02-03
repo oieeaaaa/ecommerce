@@ -9,6 +9,15 @@ class Product(models.Model):
     stock = models.IntegerField()
     image_url = models.URLField(max_length=2083)
     created_at = models.DateTimeField(auto_now_add=True)
+    categories = models.ManyToManyField('Category', related_name='products')
+
+    def __str__(self):
+        return self.name
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name

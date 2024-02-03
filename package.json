@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "run-p client server",
     "client": "node ./esbuild.config.js",
-    "server": "python3 manage.py runserver"
+    "server": "python3 manage.py runserver",
+    "migrate": "bash ./tools/migrate.sh"
   },
   "repository": {
     "type": "git",
