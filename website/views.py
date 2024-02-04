@@ -10,7 +10,7 @@ from website.models import Category, Product, Cart
 
 def index(request):
     products = Product.objects.all()[:10]
-    categories = Category.objects.all()[:100]
+    categories = Category.objects.all()[:10]
 
     return render(request, 'website/pages/home.html', {
         'products': products,
@@ -157,3 +157,11 @@ def cart_length(request):
     return render(request, 'website/elements/cart-count.html', {
         'cart_count': Cart.objects.count()
     })
+
+class CategoryView(View):
+    def get(self, request):
+        categories = Category.objects.all()
+
+        return render(request, 'website/components/filters.html', {
+            'categories': categories
+        })

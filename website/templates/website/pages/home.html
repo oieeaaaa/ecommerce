@@ -1,10 +1,30 @@
 {% extends "website/layout/base.html" %}
 
+{% comment %}
+TODO:
+- Custom elements are not working because of the way the template is rendered
+- HX-Swaps fucks up the custom elements event handlers
+- what do i do?
+
+{% endcomment %}
 {% block head %}<title>Home</title>{% endblock %}
 {% block content %}
+    {# Filters #}
+    {% include "website/components/filters.html" %}
     <div class="container py-10">
+        <h1 class="text-3xl font-oswald text-gray-900 mb-4">Welcome to our store</h1>
+        <x-home-search>
+        <div class="grid grid-cols-[1fr_auto] mb-10 gap-x-4">
+            <input type="text"
+                   class="w-full border border-gray-300 rounded-lg px-2"
+                   placeholder="Search for products">
+            <button data-filter class="border rounded-lg w-12 h-12 bg-white">
+                <span class="text-gray-900 icon-filter"></span>
+            </button>
+        </div>
+        </x-home-search>
         <div class="space-y-3 mb-10">
-            <h1 class="text-gray-900 uppercase font-oswald">Top Categories</h1>
+            <h2 class="text-gray-900 uppercase font-oswald">Top Categories</h2>
             <form hx-trigger="change from:[data-category-input]"
                   hx-post="{% url 'filter' %}"
                   hx-select="[data-products]"
@@ -20,7 +40,7 @@
                                        class="hidden peer/category"
                                        id="{{ id }}"
                                        data-category-input>
-                                <span class="peer-checked/category:bg-red-500 inline-block text-gray-600 rounded-md px-3 bg-white font-medium py-2">{{ category.name }}</span>
+                                <span class="peer-checked/category:bg-black peer-checked/category:border-black peer-checked/category:text-white inline-block text-black rounded-md px-3 bg-transparent border font-medium py-2">{{ category.name }}</span>
                             </label>
                         {% endwith %}
                     {% endfor %}

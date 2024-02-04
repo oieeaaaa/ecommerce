@@ -1,6 +1,8 @@
 import './components/card/card.js'
 import './components/alert/alert.js'
 import './components/cart-card/cart-card.js'
+import './components/filters-drawer/filters-drawer.js'
+import './components/home-search/home-search.js'
 
 import './styles/icons/icons.css'
 import './styles/tailwind.css'

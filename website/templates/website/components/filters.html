@@ -1,0 +1,30 @@
+<x-filters-drawer class="hidden">
+  <div hx-trigger="load" hx-get="{% url 'categories' %}" hx-swap="outerHTML" hx-target="[data-filters]"
+    hx-select="[data-filters]">
+    <div class="fixed top-0 right-0 z-50 h-full w-full flex justify-end">
+      <div class="w-10/12 bg-white">
+        <div class="flex items-center p-4 border-b">
+          <h1 class="text-2xl font-bold font-oswald mr-auto">Filters</h1>
+          <button class="w-10 h-10 rounded-md bg-black text-white" data-close>
+            <span class="icon-x"></span>
+          </button>
+        </div>
+        <div data-filters
+          class="flex flex-wrap gap-x-2 gap-y-2 p-4 pb-32 overflow-y-auto overscroll-contain relative h-full">
+          {% for category in categories %}
+          {% with id=category.name|slugify %}
+          <label for="{{ id }}">
+            <input name="category.{{ category.name }}" type="checkbox" class="hidden peer/category" id="{{ id }}"
+              data-category-input>
+            <span
+              class="peer-checked/category:bg-black peer-checked/category:border-black peer-checked/category:text-white inline-block text-black rounded-md px-3 bg-transparent border font-medium py-2">
+              {{ category.name }}</span>
+          </label>
+          {% endwith %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="absolute top-0 right-0 z-40 h-full w-full bg-black bg-opacity-50 backdrop-blur-sm"></div>
+  </div>
+</x-filters-drawer>
