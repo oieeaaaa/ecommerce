@@ -23,5 +23,6 @@ __pycache__
 db.sqlite3
 venv
 
-# For front-end
 node_modules
+migrations/*.py
+!migration/__init__.py

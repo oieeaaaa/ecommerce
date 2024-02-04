@@ -7,6 +7,7 @@ from website.models import Category, Product, Cart
 
 # Create your views here.
 
+
 def index(request):
     products = Product.objects.all()[:10]
     categories = Category.objects.all()[:100]
@@ -16,27 +17,23 @@ def index(request):
         'categories': categories
     })
 
+
 class HomeFilter(View):
     def post(self, request):
         form = request.POST
 
-        filters = []
-        combined_filter = Q()
+        filters = Q()
 
         for key in form:
             if key.find('category') != -1:
                 try:
                     category = Category.objects.get(name=key.split('.')[1])
-                    filters.append(category.id)
-                except:
+                    filters |= Q(categories__id=category.id)
+                except Category.DoesNotExist:
                     return HttpResponse('Invalid category name')
 
-        for filter in filters:
-            # TODO: study this syntax
-            combined_filter |= filter
-
         # filter products by categories
-        products = Product.objects.filter(combined_filter)[:10]
+        products = Product.objects.filter(filters)[:10]
 
         return render(request, 'website/pages/home.html', {
             'products': products
@@ -49,6 +46,7 @@ def product_detail(request, id):
     return render(request, 'website/pages/product-detail.html', {
         'product': product,
     })
+
 
 class CartView(View):
     def get(self, request):
@@ -81,7 +79,7 @@ class CartView(View):
                 'message': 'Stock is not enough'
             })
 
-            return res;
+            return res
 
         if cart:
             cart.quantity += int(quantity)
@@ -99,6 +97,7 @@ class CartView(View):
         response['HX-Location'] = '/cart'
 
         return response
+
 
 def cart_item_delete(request, id):
     if request.method == 'POST':
@@ -130,7 +129,7 @@ def cart_item_update(request, id):
 
             res['HX-Reswap'] = 'none'
 
-            return res;
+            return res
 
         # delete cart if qty is 0
         if qty <= 0:
@@ -147,6 +146,7 @@ def cart_item_update(request, id):
         return res
     else:
         return redirect('cart')
+
 
 def cart_length(request):
     cart_count = Cart.objects.count()
