@@ -7,25 +7,46 @@ class FiltersDrawer extends HTMLElement {
     return this.querySelector('[data-close]');
   }
 
+  get _content() {
+    return this.querySelector('[data-content]');
+  }
+
   close = () => {
-    this.classList.add('hidden');
+    this._content.classList.remove('fadeInRightBig');
+    this._content.classList.add('fadeOutRightBig');
+    this._content.addEventListener('animationend', this.afterClose, { once: true })
+  }
+
+  afterClose = () => {
+    this._content.classList.remove('fadeOutRightBig');
+    this.classList.remove('active');
   }
 
   open = () => {
-    console.log('open');
-    this.classList.remove('hidden');
+    this._content.removeEventListener('animationend', this.afterClose);
+    this.classList.add('active');
+    this._content.classList.add('fadeInRightBig');
+  }
+
+  init() {
+    document.addEventListener(SHOW_FILTERS_EVENT, this.open);
+    this._close.addEventListener('click', this.close);
+  }
+
+  cleanup() {
+    document.removeEventListener('x-filters-drawer:open', this.open);
+    this._close.removeEventListener('click', this.close);
   }
 
   constructor() {
     super()
 
-    document.addEventListener(SHOW_FILTERS_EVENT, this.open);
-    this._close.addEventListener('click', this.close);
+    this.addEventListener('htmx:beforeSwap', this.cleanup)
+    this.addEventListener('htmx:afterSwap', this.init)
   }
 
   disconnectedCallback() {
-    document.removeEventListener('x-filters-drawer:open', this.open);
-    this._close.removeEventListener('click', this.close);
+    this.cleanup()
   }
 }
 

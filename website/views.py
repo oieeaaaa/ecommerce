@@ -27,7 +27,6 @@ def index(request):
     return render(request, 'website/pages/home.html', {
         'products': products,
         'categories': categories,
-        'filters': filters
     })
 
 

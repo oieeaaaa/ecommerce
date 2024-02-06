@@ -10,7 +10,40 @@
   }
 }
 
+@keyframes fadeInRightBig {
+  from {
+    opacity: 0;
+    transform: translate3d(2000px, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeOutRightBig {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(2000px, 0, 0);
+  }
+}
+
 .fadeInLeftBig {
   animation-name: fadeInLeftBig;
+  animation-duration: var(--animation-duration);
+}
+
+.fadeInRightBig {
+  animation-name: fadeInRightBig;
+  animation-duration: var(--animation-duration);
+}
+
+.fadeOutRightBig {
+  animation-name: fadeOutRightBig;
   animation-duration: var(--animation-duration);
 }

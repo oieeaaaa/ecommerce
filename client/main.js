@@ -12,5 +12,6 @@ import './styles/animations/lightspeed.css'
 import './styles/animations/fade.css'
 
 import './components/card/card.css'
+import './components/filters-drawer/filters-drawer.css'
 
 window.htmx = require('htmx.org')

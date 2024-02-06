@@ -4,50 +4,27 @@
 {% block content %}
     {# Filters #}
     {% include "website/components/filters.html" %}
-    <div class="container py-10"
-         hx-get="{% url 'home' %}"
-         hx-trigger="filters_changed from:body"
-         hx-target="this"
-         hx-swap="outerHTML"
-         hx-select="[data-content]"
-         data-content>
+    <div class="container">
         <h1 class="text-3xl font-oswald text-gray-900 mb-4">Welcome to our store</h1>
-        <x-home-search>
-        <div class="grid grid-cols-[1fr_auto] mb-10 gap-x-4">
-            <input type="text"
-                   class="w-full border border-gray-300 rounded-lg px-2"
-                   placeholder="Search for products">
-            <button data-filter class="border rounded-lg w-12 h-12 bg-white">
-                <span class="text-gray-900 icon-filter"></span>
-            </button>
-        </div>
-        </x-home-search>
-        <div class="space-y-3 mb-10">
-            <h2 class="text-gray-900 uppercase font-oswald">Top Categories</h2>
-            <form hx-trigger="change from:[data-category-input]"
-                  hx-post="{% url 'filter' %}"
-                  hx-select="[data-products]"
-                  hx-target="[data-products]"
-                  hx-swap="outerHTML">
-                {% csrf_token %}
-                <div class="flex flex-wrap gap-x-2 gap-y-2">
-                    {% for category in categories %}
-                        {% with id=category.name|slugify %}
-                            <label for="{{ id }}">
-                                <input name="category.{{ category.name }}"
-                                       type="checkbox"
-                                       class="hidden peer/category"
-                                       id="{{ id }}"
-                                       data-category-input
-                                       {% if category.name in filters %}checked{% endif %}>
-                                <span class="peer-checked/category:bg-black peer-checked/category:border-black peer-checked/category:text-white inline-block text-black rounded-md px-3 bg-transparent border font-medium py-2">{{ category.name }}</span>
-                            </label>
-                        {% endwith %}
-                    {% endfor %}
-                </div>
-            </form>
-        </div>
-        <div data-products class="space-y-7">
+    </div>
+    <x-home-search class="py-4 container sticky block top-0 bg-gray-100 z-30">
+    <div class="grid grid-cols-[1fr_auto] gap-x-4">
+        <input type="text"
+               class="w-full border border-gray-300 rounded-lg px-2"
+               placeholder="Search for products">
+        <button data-filter class="border rounded-lg w-12 h-12 bg-white">
+            <span class="text-gray-900 icon-filter"></span>
+        </button>
+    </div>
+    </x-home-search>
+    <div class="container py-10" data-content>
+        <div hx-get="{% url 'home' %}"
+             hx-trigger="filters_changed from:body"
+             hx-target="[data-products]"
+             hx-swap="outerHTML"
+             hx-select="[data-products]"
+             data-products
+             class="space-y-7">
             {% for product in products %}
                 <a class="block" href="{% url 'product_detail' product.id %}">
                     {% include "website/components/card.html" with product=product %}

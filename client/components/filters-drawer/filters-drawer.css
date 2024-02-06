@@ -1,0 +1,7 @@
+.filters-drawer {
+  display: none;
+}
+
+.filters-drawer.active {
+  display: block;
+}

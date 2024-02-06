@@ -9,8 +9,6 @@ class HomeSearch extends HTMLElement {
   filterShowEvent = new Event(SHOW_FILTERS_EVENT);
 
   showFilters = () => {
-    console.log('showFilters', SHOW_FILTERS_EVENT);
-
     document.dispatchEvent(this.filterShowEvent);
   }
 
