@@ -1,12 +1,12 @@
 from django.urls import path
 
 # import all from .views
-from .views import CartView, CategoryView, HomeFilter, cart_length, cart_item_delete, cart_item_update, index
+from .views import CartView, CategoryView, Filter, cart_length, cart_item_delete, cart_item_update, index
 from .views import product_detail
 
 urlpatterns = [
     path('', index, name='home'),
-    path('filter', HomeFilter.as_view(), name='filter'),
+    path('filter', Filter.as_view(), name='filter'),
     path('categories', CategoryView.as_view(), name='categories'),
     path('products/<int:id>', product_detail, name='product_detail'),
     path('cart', CartView.as_view(), name='cart'),

@@ -1,12 +1,5 @@
 {% extends "website/layout/base.html" %}
 
-{% comment %}
-TODO:
-- Custom elements are not working because of the way the template is rendered
-- HX-Swaps fucks up the custom elements event handlers
-- what do i do?
-
-{% endcomment %}
 {% block head %}<title>Home</title>{% endblock %}
 {% block content %}
     {# Filters #}
@@ -39,7 +32,8 @@ TODO:
                                        type="checkbox"
                                        class="hidden peer/category"
                                        id="{{ id }}"
-                                       data-category-input>
+                                       data-category-input
+                                       {% if category.name in filters %}checked{% endif %}>
                                 <span class="peer-checked/category:bg-black peer-checked/category:border-black peer-checked/category:text-white inline-block text-black rounded-md px-3 bg-transparent border font-medium py-2">{{ category.name }}</span>
                             </label>
                         {% endwith %}

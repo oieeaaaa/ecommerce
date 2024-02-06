@@ -9,35 +9,53 @@ from website.models import Category, Product, Cart
 
 
 def index(request):
-    products = Product.objects.all()[:10]
     categories = Category.objects.all()[:10]
+    filters = request.session.get('filters', {})
+    products = []
+
+    if filters:
+        filtersQ = Q()
+        for key in filters:
+            filtersQ |= Q(categories__name=key)
+
+        products = Product.objects.filter(filtersQ)[:10]
+    else:
+        products = Product.objects.all()[:10]
 
     return render(request, 'website/pages/home.html', {
         'products': products,
-        'categories': categories
+        'categories': categories,
+        'filters': filters
     })
 
 
-class HomeFilter(View):
+class Filter(View):
     def post(self, request):
         form = request.POST
-
-        filters = Q()
+        sessionFilters = dict()
+        filtersQ = Q()
 
         for key in form:
             if key.find('category') != -1:
                 try:
-                    category = Category.objects.get(name=key.split('.')[1])
-                    filters |= Q(categories__id=category.id)
+                    key = key.split('.')[1]
+                    filtersQ |= Q(categories__name=key)
+                    sessionFilters[key] = True
                 except Category.DoesNotExist:
                     return HttpResponse('Invalid category name')
 
         # filter products by categories
-        products = Product.objects.filter(filters)[:10]
+        products = Product.objects.filter(filtersQ)[:10]
 
-        return render(request, 'website/pages/home.html', {
+        # set filters to session
+        request.session['filters'] = sessionFilters
+
+        res = render(request, 'website/pages/home.html', {
             'products': products
         })
+        res['HX-Trigger'] = 'filters_changed'
+
+        return res
 
 
 def product_detail(request, id):
@@ -158,10 +176,13 @@ def cart_length(request):
         'cart_count': Cart.objects.count()
     })
 
+
 class CategoryView(View):
     def get(self, request):
         categories = Category.objects.all()
+        filters = request.session.get('filters', {})
 
         return render(request, 'website/components/filters.html', {
-            'categories': categories
+            'categories': categories,
+            'filters': filters
         })
