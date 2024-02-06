@@ -1,5 +1,5 @@
 import { defineElement } from "../../utils/defineElement";
-import { SHOW_FILTERS_EVENT } from "./filters-drawer/filters-drawer.js";
+import { SHOW_FILTERS_EVENT } from "../filters-drawer/filters-drawer.js";
 
 class HomeSearch extends HTMLElement {
   get _filter() {
