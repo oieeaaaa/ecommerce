@@ -4,7 +4,13 @@
 {% block content %}
     {# Filters #}
     {% include "website/components/filters.html" %}
-    <div class="container py-10">
+    <div class="container py-10"
+         hx-get="{% url 'home' %}"
+         hx-trigger="filters_changed from:body"
+         hx-target="this"
+         hx-swap="outerHTML"
+         hx-select="[data-content]"
+         data-content>
         <h1 class="text-3xl font-oswald text-gray-900 mb-4">Welcome to our store</h1>
         <x-home-search>
         <div class="grid grid-cols-[1fr_auto] mb-10 gap-x-4">

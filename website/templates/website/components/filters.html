@@ -13,9 +13,7 @@
             <span class="icon-x"></span>
           </button>
         </div>
-        <form 
-            class="overflow-y-auto overscroll-contain relative h-full"
-        >
+        <form class="overflow-y-auto overscroll-contain relative h-full">
           {% csrf_token %}
           <div 
             data-filters
@@ -27,6 +25,9 @@
                 class="hidden peer/category" id="filters-{{ id }}"
                 name="category.{{ category.name }}" 
                 type="checkbox" 
+                hx-post="{% url 'filter' %}"
+                hx-trigger="change"
+                hx-swap="none"
                 data-filter-input
                 {% if category.name in filters %}checked{% endif %}
               >

@@ -8,6 +8,8 @@ from website.models import Category, Product, Cart
 # Create your views here.
 
 
+# TODO:
+# - Category filter and home filter cancels each other
 def index(request):
     categories = Category.objects.all()[:10]
     filters = request.session.get('filters', {})
@@ -33,26 +35,19 @@ class Filter(View):
     def post(self, request):
         form = request.POST
         sessionFilters = dict()
-        filtersQ = Q()
 
         for key in form:
             if key.find('category') != -1:
                 try:
                     key = key.split('.')[1]
-                    filtersQ |= Q(categories__name=key)
                     sessionFilters[key] = True
                 except Category.DoesNotExist:
                     return HttpResponse('Invalid category name')
 
-        # filter products by categories
-        products = Product.objects.filter(filtersQ)[:10]
-
         # set filters to session
         request.session['filters'] = sessionFilters
 
-        res = render(request, 'website/pages/home.html', {
-            'products': products
-        })
+        res = HttpResponse()
         res['HX-Trigger'] = 'filters_changed'
 
         return res
